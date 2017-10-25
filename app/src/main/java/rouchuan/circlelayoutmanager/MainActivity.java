@@ -1,7 +1,6 @@
 package rouchuan.circlelayoutmanager;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,35 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.circlelayoutmanager.CircleLayoutManager;
-import com.example.circlelayoutmanager.ScrollZoomLayoutManager;
+import com.example.circlelayoutmanager.CircleZoomLayoutManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean isCircle = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final RecyclerView recyclerView =(RecyclerView)findViewById(R.id.recycler);
-        final CircleLayoutManager circleLayoutManager = new CircleLayoutManager(this);
-        final ScrollZoomLayoutManager scrollZoomLayoutManager = new ScrollZoomLayoutManager(this,Dp2px(10));
+//        final ScrollZoomLayoutManager scrollZoomLayoutManager = new ScrollZoomLayoutManager(this,Dp2px(10));
+//        recyclerView.setLayoutManager(scrollZoomLayoutManager);
+
+//        CircleLayoutManager manager = new CircleLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(manager);
+        final CircleZoomLayoutManager layoutManager = new CircleZoomLayoutManager(this,Dp2px(10));
+        recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.addOnScrollListener(new com.example.circlelayoutmanager.CenterScrollListener());
-        recyclerView.setLayoutManager(circleLayoutManager);
         recyclerView.setAdapter(new Adapter());
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isCircle){
-                    recyclerView.setLayoutManager(scrollZoomLayoutManager);
-                }else{
-                    recyclerView.setLayoutManager(circleLayoutManager);
-                }
-                isCircle = !isCircle;
-            }
-        });
+
     }
 
     public int Dp2px(float dp) {
